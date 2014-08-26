@@ -1,0 +1,32 @@
+
+!!!
+%head
+  %title Korialys Inventory Management System
+  %link{:type => "text/css", :rel => "stylesheet", :href => "/css/bootstrap.css"}
+  %link{:type => "text/css", :rel => "stylesheet", :href => "/css/style.css"}
+
+
+%body
+  .header
+    %img.logo(src='/img/korialys_sm.png')
+
+.col-sm-6
+  %form.device-form.form-horizontal{ :action => "/device", :method => "post", :enctype => "multipart/form-data" }
+    .form-group
+      %label.control-label UPC
+      %input.form-control{ :type => "text", :name => "device[upca]" }
+    .form-group
+      %label.control-label IMEI
+      %input.form-control{ :type => "text", :name => "device[imei]" }
+    .form-group
+      %label.control-label ICCID
+      %input.form-control{ :type => "text", :name => "device[iccid]" }
+    .form-group
+      %label.control-label S/N
+      %input.form-control{ :type => "text", :name => "device[serial]" }
+    .form-group
+      %label.control-label Model
+      %input.form-control{ :type => "text", :name => "device[modelid]"}
+    .form-group
+      %label.control-label
+      %input.btn.btn-primary{ :type => "submit" }

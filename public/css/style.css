@@ -1,0 +1,30 @@
+
+body {
+    background-image: url('/img/redox_01.png');
+}
+
+
+.header {
+
+  margin: 20px;
+}
+
+.table {
+  background-color: lightgray;
+
+  width: 75%;
+  margin: 1% auto;
+  }
+
+.table-head {
+  font-family: "Helvetica";
+  font-weight: bold;
+  font-size: 16pt;
+
+}
+
+
+
+.control-label {font-weight: bold;margin-right: 10px}
+
+
