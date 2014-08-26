@@ -1,38 +1,33 @@
-!!!
-%head
-  %title Korialys Inventory Management System
-  %link{:type => "text/css", :rel => "stylesheet", :href => "/css/bootstrap.css"}
-  %link{:type => "text/css", :rel => "stylesheet", :href => "/css/style.css"}
+%h1.text-center= @title
 
-
-%body
-  .header
-    %img.logo(src='/img/korialys_sm.png')
-
-  %h1.text-center= @title
-
-  %table.table.table-striped
-    %thead.table-head
+%table.table.table-striped
+  %thead.table-head
+    %tr
+      %td UPC
+      %td IMEI
+      %td ICCI
+      %td S/N
+      %td Model
+      %td Location
+      %td Status
+  %tbody
+    - @devices.each do |dev|
       %tr
-        %td UPC
-        %td IMEI
-        %td ICCI
-        %td S/N
-        %td Model
-        %td Location
-        %td Status
-    %tbody
-      - @devices.each do |dev|
-        %tr
-          %td= %a{ :href => "/device/upca/#{dev['upca']}" }=dev['upca']
-          %td= %a{ :href => "/device/imei/#{dev['imei']}" }=dev['imei']
-          %td= %a{ :href => "/device/iccid/#{dev['iccid']}" }=dev['iccid']
-          %td= %a{ :href => "/device/#{dev['serial']}" }= dev['serial']
-          %td= %a{ :href => "/device/modelid/#{dev['modelid']}" }= dev['modelid']
-          %td= %a{ :href => "/device/location/#{dev['ats_warehouse']}" }= dev['ats_warehouse']
-          %td= %a{ :href => "/device/status/#{dev['status']}" }=dev['status']
-          %td
-            %a.btn.btn-primary{ :href => "/device/#{dev.serial}" } Edit
+        %td
+          %a{ href: "/device/upca/#{dev['upca']}"}= dev['upca']
+        %td
+          %a{ href: "/device/imei/#{dev['imei']}"}=dev['imei']
+        %td
+          %a{ href: "/device/iccid/#{dev['iccid']}"}=dev['iccid']
+        %td
+          %a{ href: "/device/serial/#{dev['serial']}"}=dev['serial']
+        %td
+          %a{ href:  "/device/modelid/#{dev['modelid']}" }=dev['modelid']
+        %td
+          %a{ href: "/device/location/#{dev['ats_warehouse']}" }=dev['ats_warehouse']
+        %td
+          %a{ href: "/device/status/#{dev['status']}" }=dev['status']
+        %td
+          %a.btn.btn-primary{ href: "/device/id/#{dev.id}" } Change
 
-/ review this bit : %td
-/   %a{ :href => "/video/show/#{video.id}" }= video.title
+.footer

@@ -5,9 +5,16 @@ body {
 
 
 .header {
-
-  margin: 20px;
+  background-color: darkred;
+  padding: 20px;
+  margin-bottom: 40px;
 }
+
+.header {
+  background-color: darkred;
+  padding: 20px;
+}
+
 
 .table {
   background-color: lightgray;
@@ -23,8 +30,11 @@ body {
 
 }
 
-
-
 .control-label {font-weight: bold;margin-right: 10px}
+
+.change-box{
+  margin:30px auto;
+  width: 30%;
+}
 
 

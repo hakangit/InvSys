@@ -9,7 +9,7 @@ require "dm-noisy-failures"
 set :environment, :development
 set :bind, '0.0.0.0'
 
-
+DataMapper::Logger.new(STDOUT, :debug)
 DataMapper::setup( :default, "sqlite3://#{Dir.pwd}/inv.db" )
 DataMapper::Model.raise_on_save_failure = true  # globally across all models
 
@@ -84,10 +84,68 @@ get '/device' do
 
 end
 
-get '/device/:serial' do
-
-  @devices = Device.get(serial: params[:serial])
+get '/device/upca/:upca' do
+  @title = 'UPCA FILTER'
+  @upca = params[:upca]
+  @devices = Device.all(upca: @upca)
   haml :list
+
+end
+
+get '/device/iccid/:iccid' do
+  @title = 'ICCID FILTER'
+  @iccid = params[:iccid]
+  @devices = Device.all(iccid: @iccid)
+  haml :list
+
+end
+
+get '/device/modelid/:modelid' do
+  @title = 'MODELID FILTER'
+  @modelid = params[:modelid]
+  @devices = Device.all(modelid: @modelid)
+  haml :list
+
+end
+
+get '/device/location/:location' do
+  @title = 'LOCATION FILTER'
+  @location = params[:location]
+  @devices = Device.all(ats_warehouse: @location)
+  haml :list
+
+end
+
+get '/device/status/:status' do
+  @title = 'STATUS FILTER'
+  @status = params[:status]
+  @devices = Device.all(status: @status)
+  haml :list
+
+end
+
+
+get '/device/modelid/:modelid' do
+  @title = 'MODEL FILTER'
+  @modelid = params[:modelid]
+  @devices = Device.all(modelid: @modelid)
+  haml :list
+
+end
+
+get '/device/serial/:serial' do
+  @title = 'Serial Number Filter'
+  @serial = params[:serial]
+  @devices = Device.last(serial: @serial)
+  haml :single
+
+end
+
+get '/device/id/:id' do
+  @title = 'Change View'
+  @id = params[:id]
+  @devices = Device.last(id: @id)
+  haml :change
 
 end
 
