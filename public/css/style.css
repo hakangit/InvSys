@@ -7,10 +7,16 @@ body {
 .header {
   background-color: darkred;
   padding: 20px;
-  margin-bottom: 40px;
 }
 
-.header {
+#chart {width: 33%;margin:10px auto;}
+
+.btn {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.footer {
   background-color: darkred;
   padding: 20px;
 }
@@ -34,7 +40,24 @@ body {
 
 .change-box{
   margin:30px auto;
-  width: 30%;
+  width: 33%;
 }
+
+.delete-form {width: 33%; margin: 0 auto;}
+
+
+.data-vis{
+  width: 60%;
+  padding:10px 2%;
+  margin:10px auto;
+}
+
+.data-table{
+  width: 75%;
+  padding:10px 2%;
+  margin:10px auto;
+
+}
+
 
 

@@ -1,42 +1,56 @@
 
-%h1.text-center= @title
 
-%table.table.table-striped
-  %thead.table-head
-  %tr
-    %td Attribute
-    %td Value
-  %tbody
-    %tr
-      %td UPC
-      %td
-        %a{ href: "/device/upca/#{@devices['upca']}"}=@devices['upca']
-    %tr
-      %td IMEI
-      %td
-        %a{ href: "/device/imei/#{@devices['imei']}"}=@devices['imei']
-    %tr
-      %td ICCI
-      %td
-        %a{ href: "/device/iccid/#{@devices['iccid']}"}=@devices['iccid']
-    %tr
-      %td S/N
-      %td
-        %a{ href: "/device/serial/#{@devices['serial']}"}=@devices['serial']
-    %tr
-      %td Model
-      %td
-        %a{ href:  "/device/modelid/#{@devices['modelid']}" }=@devices['modelid']
-    %tr
-      %td Location
-      %td
-        %a{ href: "/device/location/#{@devices['ats_warehouse']}" }=@devices['ats_warehouse']
-      %td stuff here..
-    %tr
-      %td Status
-      %td
-        %a{ href: "/device/status/#{@devices['status']}" }=@devices['status']
+.container-fluid
+  .row
+    %h1.text-center= @title
+
+    %table.table.table-striped
+      %thead.table-head
+      %tr
+        %td Attribute
+        %td Value
+        / %td Action
+      %tbody
+        %tr
+          %td UPC
+          %td
+            %a{ href: "/device/upca/#{@devices['upca']}"}=@devices['upca']
+
+        %tr
+          %td IMEI
+          %td
+            %a{ href: "/device/imei/#{@devices['imei']}"}=@devices['imei']
+
+        %tr
+          %td ICCI
+          %td
+            %a{ href: "/device/iccid/#{@devices['iccid']}"}=@devices['iccid']
+
+        %tr
+          %td S/N
+          %td
+            %a{ href: "/device/serial/#{@devices['serial']}"}=@devices['serial']
+
+        %tr
+          %td Model
+          %td
+            %a{ href:  "/device/modelid/#{@devices['modelid']}" }=@devices['modelid']
+
+        %tr
+          %td Location
+          %td
+            %a{ href: "/device/location/#{@devices['ats_warehouse']}" }=@devices['ats_warehouse']
+
+        %tr
+          %td Status
+          %td
+            %a{ href: "/device/status/#{@devices['status']}" }=@devices['status']
+
+.container
+  .row
+    .change-box
+      %a.btn{ href: "/" } Back
+      %a.btn.btn-primary{ href: "/edit/device/id/#{@devices.id}" } Edit
+      %a.btn.btn-danger{ href: "/delete/id/#{@devices.id}" } Delete
 
 
-.change-box
-  %a.btn.btn-primary{ href: "/device/id/#{@devices.id}" } Change

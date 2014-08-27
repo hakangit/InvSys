@@ -1,0 +1,44 @@
+
+.container
+  .row
+    .col-sm-4
+      %form.device-form.form-horizontal{ :action => "/edit/device", :method => "post", :enctype => "multipart/form-data" }
+        .form-group
+          / %label.control-label ID
+          %input.form-control{ :type => "hidden", :name => "id", value: @devices['id']  }
+          %input.form-control{ :type => "hidden", :name => "serial", value: @devices['serial']  }
+          %input.form-control{ :type => "hidden", :name => "device[id]", value: @devices['id']  }
+        .form-group
+          %label.control-label UPC
+          %input.form-control{ :type => "text", :name => "device[upca]", value: @devices['upca'] }
+        .form-group
+          %label.control-label IMEI
+          %input.form-control{ :type => "text", :name => "device[imei]", value: @devices['imei'] }
+        .form-group
+          %label.control-label ICCID
+          %input.form-control{ :type => "text", :name => "device[iccid]" ,value: @devices['iccid'] }
+        .form-group
+          %label.control-label S/N
+          %input.form-control{ :type => "text", :name => "device[serial]", value: @devices['serial'] }
+        .form-group
+          %label.control-label Model
+          %input.form-control{ :type => "text", :name => "device[modelid]", value: @devices['modelid']}
+        .form-group
+          %label.control-label Location
+          %select.form-control{ :name => "device[ats_warehouse]" }
+            %option{value: "Unassigned", selected: @devices['ats_warehouse'] == "Unassigned"}= "Unassigned"
+            %option{value: "Sheung Wan", selected: @devices['ats_warehouse'] == "Sheung Wan"}= "Sheung Wan"
+            %option{value: "Kwai Hing", selected: @devices['ats_warehouse'] == "Kwai Hing"}= "Kwai Hing"
+        .form-group
+          %label.control-label Status
+          %select.form-control{ :name => "device[status]" }
+            %option{value: "Unassigned", selected: @devices['status'] == "Unassigned"}= "Unassigned"
+            %option{value: "Received", selected: @devices['status'] == "Received"}= "Received"
+            %option{value: "Storage-Prestage", selected: @devices['status'] == "Storage-Prestage"}= "Storage-Prestage"
+            %option{value: "Work In Progress", selected: @devices['status'] == "Work In Progress"}= "Work In Progress"
+            %option{value: "QA Pending", selected: @devices['status'] == "QA Pending"}= "QA Pending"
+            %option{value: "Ready For Shipment", selected: @devices['status'] == "Ready For Shipment"}= "Ready For Shipment"
+            %option{value: "Shipped", selected: @devices['status'] == "Shipped"}= "Shipped"
+        .form-group
+          %label.control-label
+          %input.btn.btn-primary{ :type => "submit" }

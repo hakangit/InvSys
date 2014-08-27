@@ -1,0 +1,9 @@
+
+<script src="//www.google.com/jsapi"></script>
+<script src="js/chartkick.js"></script>
+
+%h4.text-center Testing Chartkick
+
+.chart2
+  %p
+    =column_chart({Unassigned: @devices.all(ats_warehouse: "Unassigned").count, Unknown: @devices.all(ats_warehouse: "").count,Sheung_Wan: @devices.all(ats_warehouse: "Sheung Wan").count,Kwai_Hing: @devices.all(ats_warehouse: "Kwai Hing").count}, id: "front-chart")

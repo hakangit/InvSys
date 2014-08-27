@@ -1,33 +1,46 @@
 %h1.text-center= @title
+<script src="//www.google.com/jsapi"></script>
+<script src="js/chartkick.js"></script>
+.container-fluid
+  .row
+    .data-vis
+      .chart
+        %p
+          =bar_chart({Unassigned: @devices.all(status: "Unassigned").count, Unknown: @devices.all(status: "").count,Received: @devices.all(status: "Received").count,StoragePrestage: @devices.all(status: "Storage-Prestage").count,WorkinProgrss: @devices.all(status: "Work in Progrss").count,QAPending: @devices.all(status: "QA Pending").count,ReadyForShipment: @devices.all(status: "Ready For Shipment").count,Shipped: @devices.all(status: "Shipped").count}, id: "front-chart")
 
-%table.table.table-striped
-  %thead.table-head
-    %tr
-      %td UPC
-      %td IMEI
-      %td ICCI
-      %td S/N
-      %td Model
-      %td Location
-      %td Status
-  %tbody
-    - @devices.each do |dev|
-      %tr
-        %td
-          %a{ href: "/device/upca/#{dev['upca']}"}= dev['upca']
-        %td
-          %a{ href: "/device/imei/#{dev['imei']}"}=dev['imei']
-        %td
-          %a{ href: "/device/iccid/#{dev['iccid']}"}=dev['iccid']
-        %td
-          %a{ href: "/device/serial/#{dev['serial']}"}=dev['serial']
-        %td
-          %a{ href:  "/device/modelid/#{dev['modelid']}" }=dev['modelid']
-        %td
-          %a{ href: "/device/location/#{dev['ats_warehouse']}" }=dev['ats_warehouse']
-        %td
-          %a{ href: "/device/status/#{dev['status']}" }=dev['status']
-        %td
-          %a.btn.btn-primary{ href: "/device/id/#{dev.id}" } Change
+
+    .data-table
+      %table.table.table-striped
+        %thead.table-head
+          %tr
+            %td UPC
+            %td IMEI
+            / %td ICCI
+            %td S/N
+            / %td Model
+            %td Location
+            %td Status
+        %tbody
+          - @devices.each do |dev|
+            %tr
+              %td
+                %a{ href: "/device/upca/#{dev['upca']}"}= dev['upca']
+              %td
+                %a{ href: "/device/imei/#{dev['imei']}"}=dev['imei']
+              / %td
+              /   %a{ href: "/device/iccid/#{dev['iccid']}"}=dev['iccid']
+              %td
+                %a{ href: "/device/serial/#{dev['serial']}"}=dev['serial']
+              / %td
+              /   %a{ href:  "/device/modelid/#{dev['modelid']}" }=dev['modelid']
+              %td
+                %a{ href: "/device/location/#{dev['ats_warehouse']}" }=dev['ats_warehouse']
+              %td
+                %a{ href: "/device/status/#{dev['status']}" }=dev['status']
+              %td
+                %a.btn.btn-primary{ href: "/device/id/#{dev.id}" } Change
+
 
 .footer
+
+
