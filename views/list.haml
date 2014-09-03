@@ -6,17 +6,15 @@
     .data-vis
       .chart
         %p
-          =bar_chart({Unassigned: @devices.all(status: "Unassigned").count, Unknown: @devices.all(status: "").count,Received: @devices.all(status: "Received").count,StoragePrestage: @devices.all(status: "Storage-Prestage").count,WorkinProgrss: @devices.all(status: "Work in Progrss").count,QAPending: @devices.all(status: "QA Pending").count,ReadyForShipment: @devices.all(status: "Ready For Shipment").count,Shipped: @devices.all(status: "Shipped").count}, id: "front-chart")
-
-
+          / =bar_chart({Unassigned: @devices.all(status: "Unassigned").count, Unknown: @devices.all(status: "").count,Received: @devices.all(status: "Received").count,StoragePrestage: @devices.all(status: "Storage-Prestage").count,WorkinProgrss: @devices.all(status: "Work in Progrss").count,QAPending: @devices.all(status: "QA Pending").count,ReadyForShipment: @devices.all(status: "Ready For Shipment").count,Shipped: @devices.all(status: "Shipped").count}, id: "front-chart")
     .data-table
       %table.table.table-striped
         %thead.table-head
           %tr
-            %td UPC
             %td IMEI
+            %td Serial
             / %td ICCI
-            %td S/N
+            %td Model
             / %td Model
             %td Location
             %td Status
@@ -24,23 +22,48 @@
           - @devices.each do |dev|
             %tr
               %td
-                %a{ href: "/device/upca/#{dev['upca']}"}= dev['upca']
-              %td
-                %a{ href: "/device/imei/#{dev['imei']}"}=dev['imei']
+                %a{ href: "/device/list/imei/#{dev['imei']}"}=dev['imei']
               / %td
-              /   %a{ href: "/device/iccid/#{dev['iccid']}"}=dev['iccid']
               %td
-                %a{ href: "/device/serial/#{dev['serial']}"}=dev['serial']
-              / %td
-              /   %a{ href:  "/device/modelid/#{dev['modelid']}" }=dev['modelid']
+                %a{ href: "/device/list/serial/#{dev['serial']}"}=dev['serial']
               %td
-                %a{ href: "/device/location/#{dev['ats_warehouse']}" }=dev['ats_warehouse']
+                =dev['modelid']
               %td
-                %a{ href: "/device/status/#{dev['status']}" }=dev['status']
+                %a{ href: "/device/list/location/#{dev['location']}" }=dev['location']
               %td
-                %a.btn.btn-primary{ href: "/device/id/#{dev.id}" } Change
+                %a{ href: "/device/list/status/#{dev['status']}" }=dev['status']
+              %td
+                %a.btn.btn-primary{ href: "/device/#{dev['serial']}" } Change
 
+.container-fluid
+  .row
+    .data-table
+      %table.table.table-striped
+        %thead.table-head
+          %tr
+            %td ID
+            %td UPCA
+            %td SKU
+            %td ICCID
+            %td Location
+            %td Status
+        %tbody
+          - @sims.each do |sim|
+            %tr
+              %td
+                =sim['id']
+              %td
+                =sim['upca']
+              %td
+                =sim['serial']
+              %td
+                =sim['iccid']
+              %td
+                =sim['location']
+              %td
+                =sim['status']
+              %td
+                %a.btn.btn-primary{ href: "/sim/#{sim['id']}/edit" } Change
 
-.footer
 
 

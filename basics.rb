@@ -8,61 +8,123 @@ require 'haml'
 require 'chartkick'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'logger'
 
 set :environment, :development
+set :logging, :true
 set :bind, '0.0.0.0'
 
-DataMapper::Logger.new(STDOUT, :debug)
-DataMapper::setup( :default, "sqlite3://#{Dir.pwd}/inv.db" )
-DataMapper::Model.raise_on_save_failure = true  # globally across all models
+DataMapper::Logger.new(STDOUT, :info)
+DataMapper::setup( :default, "sqlite3://#{Dir.pwd}/dev.db" )
+# DataMapper::Model.raise_on_save_failure = true  # globally across all models
+
+  configure :production do
+    Dir.mkdir('logs') unless File.exist?('logs')
+       $logger = Logger.new('logs/common.log','weekly')
+       $logger.level = Logger::WARN
+
+       # Spit stdout and stderr to a file during production
+       # in case something goes wrong
+       $stdout.reopen("logs/output.log", "w")
+       $stdout.sync = true
+       $stderr.reopen($stdout)
+  end
+
+  configure :development do
+    $logger = Logger.new(STDOUT)
+    $logger.level = Logger::INFO
+  end
 
 class Device
   include DataMapper::Resource
-  property :id,               Serial
   property :upca,             String
   property :imei,             String
   property :iccid,            String
-  property :serial,           String,  required: true, key: true
+  property :serial,           String,  key: true
   property :modelid,          String
+  property :ats_id,           String
+  property :location,         String,  default: 'Unassigned'
+  property :status,           String,  default: 'Unassigned'
+  property :carrier_part,     String
+  property :carrier_part_2,   String
+  property :created_at,       DateTime
+  has 1, :sim
+end
+
+class Sim
+  include DataMapper::Resource
+  property :id,               Serial
+  property :upca,             String,  default: 'None'
+  property :sku,              String,  default: 'None'
+  property :iccid,            String,  default: 'None'
   property :ats_warehouse,    String,  default: 'Unassigned'
   property :status,           String,  default: 'Unassigned'
   property :created_at,       DateTime
-  # belongs_to :person
-  # belongs_to :shipment
-end
+  has 1, :device
 
-# class Person
-#   include DataMapper::Resource
-#   property :id, Serial
-#   property :full_name,    String
-#   property :company,    String
-#   property :address_1,    String
-#   property :address_2,    String
-#   property :city,    String
-#   property :region,    String
-#   property :country,    String
-#   property :postalcode,    String
-#   # has n, :device
-# end
+end
 
 # class Shipment
 #   include DataMapper::Resource
-#   property :id, Serial
-#   property :shipment_method,    String
-#   property :shipment_tracking,    String
-#   property :shipped,    Boolean
-#   property :created_at, DateTime
-#   belongs_to :device
-
+#   property :id,                   Serial
+#   property :courier,              String
+#   property :tracking_number,      String
+#   property :status,               String
+#   property :shipped,              Boolean
+#   property :created_at,           DateTime
+#   property :src_name,             String
+#   property :src_address_1,        String, default: ''
+#   property :src_address_2,        String, default: ''
+#   property :src_city,             String, default: ''
+#   property :src_region,           String, default: ''
+#   property :src_country,          String, default: ''
+#   property :src_postalcode,       String, default: ''
+#   property :dst_name,             String
+#   property :dst_address_1,        String, default: ''
+#   property :dst_address_2,        String, default: ''
+#   property :dst_city,             String, default: ''
+#   property :dst_region,           String, default: ''
+#   property :dst_country,          String, default: ''
+#   property :dst_postalcode,       String, default: ''
+#   has 0..n, :place
+#   has n, :device
 # end
 
 
-DataMapper.auto_upgrade!
 DataMapper.finalize
+DataMapper.auto_upgrade!
+
+
+def decode(input)
+  @input = input
+  @data = Hash.new
+
+  @input.each do |x|
+    case x
+      when /\A[\d]{7}\z/
+        @data["ats_id"] = x
+      when /\A[\d]{12}\z/
+        @data["upca"] = x
+      when /\A[\d]{15}\z/
+        @data["imei"] = x
+      when /\A[\d]{5}\z/
+        @data["carrier_part"] = x
+      when /\A[\d]{20}\z/
+        @data["iccid"] = x
+      when /\A1P\d.*/
+        @data["carrier_part_2"] = x
+      when /\A1P\w{2}\d{3}\w{2}[\/\d]\w\z/
+        @data["modelid"] = x[2..-1]
+      when /\AS\w{12}\z/
+        @data["serial"] = x
+    end
+  end
+  return @data
+end
+
 
 
 get '/chart' do
-
   Chartkick.options = {
     height: "200px",
     colors: ["red", "#999"]
@@ -79,6 +141,7 @@ get '/' do
 
  @title = 'Available Devices'
  @devices = Device.all
+ @sims = Sim.all
  haml :list
 end
 
@@ -86,28 +149,20 @@ get '/new' do
   haml :form
 end
 
-get '/device' do
-  @title = 'Available Devices'
-  @devices = Device.all
-  haml :list
+get '/barnew' do
+  haml :bar_form
 end
 
-get '/device/json' do
-
-  @devices = Device.all
-  content_type :json
-  @devices.to_json
+post '/device/barnew' do
+  @pre = params[:device]
+  @post = decode(@pre.values)
+  $stderr.puts "#{@post}"
+  @temp = Device.new @post
+  @temp.sim = Sim.first_or_create({device_serial: @temp[:serial]})
+  @temp.attributes = ({sim_id: @temp.sim[:id]})
+  @temp.save
+  redirect to('/barnew')
 end
-
-get '/device/csv' do
-
-  @devices = Device.all
-  content_type 'application/csv'
-  @stamp = Time.now.strftime("%Y%m%d")
-  attachment "#{@stamp}_export.csv"
-  @devices.to_csv
-end
-
 
 post '/device' do
   Device.create params[:device]
@@ -120,86 +175,74 @@ post '/search' do
   haml :single
 end
 
-get '/device/upca/:upca' do
-  @title = 'UPCA FILTER'
-  @upca = params[:upca]
-  @devices = Device.all(upca: @upca)
-  haml :list
-end
-
-get '/device/iccid/:iccid' do
-  @title = 'ICCID FILTER'
-  @iccid = params[:iccid]
-  @devices = Device.all(iccid: @iccid)
-  haml :list
-end
-
-get '/device/imei/:imei' do
-  @title = 'IMEI FILTER'
-  @imei = params[:imei]
-  @devices = Device.all(imei: @imei)
-  haml :list
-end
-
-get '/device/location/:location' do
-  @title = 'LOCATION FILTER'
-  @location = params[:location]
-  @devices = Device.all(ats_warehouse: @location)
-  haml :list
-end
-
-get '/device/status/:status' do
-  @title = 'STATUS FILTER'
-  @status = params[:status]
-  @devices = Device.all(status: @status)
-  haml :list
-end
-
-
-get '/device/modelid/:modelid' do
-  @title = 'MODEL FILTER'
-  @modelid = params[:modelid]
-  @devices = Device.all(modelid: @modelid)
-  haml :list
-end
-
-get '/device/serial/:serial' do
-  @title = 'Serial Number Filter'
+get '/device/list/serial/:serial' do
+  @title = 'Record Information'
   @serial = params[:serial]
-  @devices = Device.last(serial: @serial)
+  @devices = JSON.parse(Device.last(serial: @serial).to_json)
   haml :single
 end
 
-get '/device/id/:id' do
-  @title = 'Change View'
+get '/device/list/:property/:id' do
+  @property = params[:property]
   @id = params[:id]
-  @devices = Device.last(id: @id)
+  @title = "#{@property.upcase} Filter"
+  @type = Hash.new
+  @type["#{@property}"] = "#{@id}"
+  @devices = Device.all(@type)
+  haml :list
+end
+
+get '/device/:serial' do
+  @title = 'Change View'
+  @serial = params[:serial]
+
+  @devices = JSON.parse(Device.last(serial: @serial).to_json)
   haml :change
 end
 
-get '/edit/device/id/:id' do
+get '/device/:serial/edit' do
   @title = 'Edit View'
-  @id = params[:id]
-  @devices = Device.last(id: @id)
+  @serial = params[:serial]
+  @devices = Device.last(serial: @serial)
   haml :edit_form
 end
 
-post '/edit/device' do
-  @id = params[:id]
+post '/device/edit' do
   @serial = params[:serial]
-  Device.get(@id,@serial).update(params[:device])
+  Device.get(@serial).update(params[:device])
   redirect to('/')
 end
 
-
-get '/delete/id/:id' do
-  @id = params[:id]
-  @devices = Device.last(id: @id)
+get '/delete/:serial' do
+  @serial = params[:serial]
+  @devices = Device.last(serial: @serial)
   haml :delete
 end
-get '/delete/id/confirmed/:id' do
-  @id = params[:id]
-  @todelete = Device.last(id: @id)
+get '/delete/confirmed/:serial' do
+  @serial = params[:serial]
+  @todelete = Device.last(serial: @serial)
   @todelete.destroy
+  redirect to('/')
+end
+
+get '/device/sim_id/:id' do
+  @title = 'Change View'
+  @title = 'Record Information'
+  @id = params[:id]
+  @devices = JSON.parse(Sim.last(id: @id).to_json)
+  haml :change_sim
+end
+
+get '/sim/:id/edit' do
+  @title = 'Edit View'
+  @id = params[:id]
+  @devices = Sim.last(id: @id)
+  haml :edit_form_sim
+end
+
+
+post '/sim/edit' do
+  @id = params[:id]
+  Sim.get(@id).update(params[:device])
   redirect to('/')
 end
