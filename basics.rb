@@ -131,7 +131,7 @@ get '/chart' do
   }
   Chartkick.options[:html] = '<div id="%{id}" style="height: %{height};">Loading...</div>'
 
-  @devices = Device.all(id: 4..6, fields: [:id,:serial,:ats_warehouse,:status])
+  @devices = Device.all(fields: [:serial,:location,:status])
 
   haml :chart
 end
@@ -240,9 +240,10 @@ get '/sim/:id/edit' do
   haml :edit_form_sim
 end
 
-
 post '/sim/edit' do
   @id = params[:id]
   Sim.get(@id).update(params[:device])
   redirect to('/')
 end
+
+

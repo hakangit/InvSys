@@ -48,18 +48,16 @@
             %td Location
             %td Status
         %tbody
-          - @sims.each do |sim|
+          - @devices.sims.each do |sim|
             %tr
               %td
-                =sim['id']
+                %a{href: "/device/sim_id/#{sim['id']}"}=sim['id']
               %td
                 =sim['upca']
               %td
-                =sim['serial']
+                =sim['sku']
               %td
                 =sim['iccid']
-              %td
-                =sim['location']
               %td
                 =sim['status']
               %td
