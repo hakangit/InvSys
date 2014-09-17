@@ -9,8 +9,8 @@ body {
   padding: 20px;
 }
 
-#chart {width: 33%;margin:10px auto;}
-
+/*#chart {width: 33%;margin:10px auto;}
+*/
 .btn {
   margin-top: 0;
   margin-bottom: 5px;
@@ -37,6 +37,11 @@ body {
 }
 
 .control-label {font-weight: bold;margin-right: 10px}
+
+.scan-form{
+  margin:30px auto;
+  width: 60%;
+}
 
 .change-box{
   margin:30px auto;

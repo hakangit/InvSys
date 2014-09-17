@@ -175,6 +175,33 @@ post '/search' do
   haml :single
 end
 
+def json2csv(object)
+  @header = true
+  csv_string = CSV.generate do |csv|
+    JSON.parse(object).each do |hash|
+      if @header
+        csv << hash.keys
+      end
+      @header = false
+      csv << hash.values
+      # csv << " #{data},"
+    end
+  end
+  return csv_string
+end
+
+get '/device/csv' do
+  content_type 'application/csv'
+  attachment "devices.csv"
+  json2csv(Device.all.to_json)
+end
+
+get '/sim/csv' do
+  content_type 'application/csv'
+  attachment "sims.csv"
+  json2csv(Sim.all.to_json)
+end
+
 get '/device/list/serial/:serial' do
   @title = 'Record Information'
   @serial = params[:serial]

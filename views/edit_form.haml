@@ -26,7 +26,8 @@
           %select.form-control{ :name => "device[location]" }
             %option{value: "Unassigned", selected: @devices['location'] == "Unassigned"}= "Unassigned"
             %option{value: "Sheung Wan", selected: @devices['location'] == "Sheung Wan"}= "Sheung Wan"
-            %option{value: "Kwai Hing", selected: @devices['location'] == "Kwai Hing"}= "Kwai Hing"
+            %option{value: "Kwai Chung", selected: @devices['location'] == "Kwai Chung"}= "Kwai Chung"
+
         .form-group
           %label.control-label Status
           %select.form-control{ :name => "device[status]" }
