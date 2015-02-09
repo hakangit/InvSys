@@ -1,29 +1,33 @@
 !!!
 %head
   %title Korialys Inventory Management System
-  %link{:type => "text/css", :rel => "stylesheet", :href => "/css/bootstrap.css"}
+  %link{:type => "text/css", :rel => "stylesheet", :href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"}
   %link{:type => "text/css", :rel => "stylesheet", :href => "/css/style.css"}
 
   %script{:type=>"text/javascript", href: "http://www.google.com/jsapi"}
+  %script{:type=>"text/javascript", href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}
   %script{:type=>"text/javascript", href: "js/chartkick.js"}
 
 
   %body
     .header
       %img.logo(src='/img/korialys_sm.png')
-    .navbar
-      .navbar-inner
-        %a.brand InvSys
-        %ul.nav
-          %li.divider-vertical
-          %li
-            %a{href: "/"} Home
-          %li.divider-vertical
-          %li
-            %a{href: '/barnew'} New Barcode Scan
-          %li.divider-vertical
-          / %form.navbar-search{ :action => "/search", :method => "post", :enctype => "multipart/form-data" }
-          /   %input.span2{ :type => "text", :name => "search"}
-          /   %input.btn{ :type => "submit"}
+    %nav.navbar.navbar-inverse{role: "navigation"}
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.sollapsed{type: "button"}
+            %span.sr-only Toggle Navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand
+            InvSys
+        .collapse.navbar-collapse{id: "navbar-collapse-1"}
+          %ul.nav.navbar-nav
+            %li.active
+              %a{href: "/"} Home
+            %li
+              %a{href: '/barnew'} New Barcode Scan
 
-  = yield
+    = yield
+

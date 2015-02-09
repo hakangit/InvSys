@@ -1,0 +1,22 @@
+
+.container-fluid
+  .row
+    %h1.text-center= @title
+
+    %table.table.table-striped
+      %thead.table-head
+      %tr
+        %td Attribute
+        %td Value
+        / %td Action
+      - @devices.each do |k,v|
+        %tr
+          %td #{k.upcase}
+          %td
+            %a{ href: "/device/#{k}/#{v}" }#{v}
+.container
+  .row
+    .change-box
+      %a.btn{ href: "/" } Back
+      %a.btn.btn-primary{ href: "/sim/#{@devices['id']}/edit"} Edit
+      %a.btn.btn-danger{ href: "/sim/delete/#{@devices['id']}" } Delete

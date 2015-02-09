@@ -22,13 +22,6 @@ body {
 }
 
 
-.table {
-  background-color: lightgray;
-
-  width: 75%;
-  margin: 1% auto;
-  }
-
 .table-head {
   font-family: "Helvetica";
   font-weight: bold;
@@ -38,11 +31,6 @@ body {
 
 .control-label {font-weight: bold;margin-right: 10px}
 
-.scan-form{
-  margin:30px auto;
-  width: 60%;
-}
-
 .change-box{
   margin:30px auto;
   width: 33%;
@@ -50,19 +38,7 @@ body {
 
 .delete-form {width: 33%; margin: 0 auto;}
 
-
-.data-vis{
-  width: 60%;
-  padding:10px 2%;
-  margin:10px auto;
+.centered {
+  float: none;
+  margin: 0 auto;
 }
-
-.data-table{
-  width: 75%;
-  padding:10px 2%;
-  margin:10px auto;
-
-}
-
-
-

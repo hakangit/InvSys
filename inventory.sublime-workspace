@@ -4,16 +4,32 @@
 		"selected_items":
 		[
 			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"backg",
+				"background-size"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"text",
+				"text-transform"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
 				"get",
 				"getElementById"
 			],
 			[
 				"ge",
 				"getElementsByName"
-			],
-			[
-				"margin",
-				"margin-bottom"
 			],
 			[
 				"padding",
@@ -84,16 +100,8 @@
 				"border-bottom"
 			],
 			[
-				"back",
-				"background-color"
-			],
-			[
 				"di",
 				"display"
-			],
-			[
-				"text",
-				"text-align"
 			],
 			[
 				"instagra",
@@ -203,17 +211,9 @@
 	"build_system": "Packages/Ruby/Ruby.sublime-build",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 104.0,
 		"selected_items":
 		[
-			[
-				"rein",
-				"Indentation: Reindent Lines"
-			],
-			[
-				"anf",
-				"ANF: New File"
-			],
 			[
 				"git push",
 				"Git: Push"
@@ -221,6 +221,22 @@
 			[
 				"git com",
 				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"anf",
+				"ANF: New File"
 			],
 			[
 				"git add",
@@ -293,10 +309,6 @@
 			[
 				"git com	",
 				"Git: Commit"
-			],
-			[
-				"git ad",
-				"Git: Add Current File"
 			],
 			[
 				"",
@@ -407,7 +419,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 464.0
+		"width": 472.0
 	},
 	"console":
 	{
@@ -424,19 +436,38 @@
 	},
 	"file_history":
 	[
-		"/F/Dropbox/Development/Sinatra/Testing/views/bar_form.haml",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp22941/wp-content/themes/Confident_Lover_Theme/functions.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp38876/wp-content/themes/Confident_Lover_Theme/content.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp29448/wp-content/themes/Confident_Lover_Theme/pageofposts.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp06765/wp-content/themes/Confident_Lover_Theme/style.css",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp02234/wp-content/themes/Confident_Lover_Theme/style.css",
+		"/F/Dropbox/Websites/REDCloset/twentytwelve-child/content.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp05419/wp-content/themes/Confident_Lover_Theme/footer.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp26883/wp-content/themes/Confident_Lover_Theme/style.css",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp24119/wp-content/themes/Confident_Lover_Theme/footer.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp27190/wp-content/themes/Confident_Lover_Theme/functions.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp21040/wp-content/themes/Confident_Lover_Theme/header.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp34988/wp-content/themes/Confident_Lover_Theme/header.php",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp47889/wp-content/uploads/fixed/banner_temp.jpg",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp41831/home2/korialys/public_html/korialyshk/wp-content/themes/grizzly-child/style.css",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp33299/home2/korialys/public_html/korialyshk/wp-content/themes/korialys-child/style.css",
+		"/C/Users/nick.BTC01/Desktop/syslog.log",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp38427/wp-content/themes/whisper-child/style.css",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp32901/home/pi/emails.txt",
+		"/F/Dropbox/Development/Sinatra/Testing/views/list.haml",
 		"/F/Dropbox/Development/Sinatra/Testing/basics.rb",
+		"/F/Dropbox/Development/Sinatra/Testing/views/bar_form.haml",
+		"/F/Dropbox/Development/Sinatra/Testing/public/js/scan.js",
+		"/F/Dropbox/Development/Sinatra/Testing/public/css/style.css",
+		"/F/Dropbox/Development/Sinatra/Testing/views/layout.haml",
+		"/C/Users/nick.BTC01/AppData/Local/Temp/scp40646/home2/korialys/public_html/korialyshk/wp-content/themes/grizzly-child/screenshot.png",
 		"/F/Dropbox/Development/Sinatra/Testing/views/edit_form.haml",
 		"/C/Users/nick.BTC01/AppData/Local/Temp/scp41895/wp-content/themes/twentyfourteen-child/style.css",
-		"/F/Dropbox/Development/Sinatra/Testing/public/js/scan.js",
-		"/F/Dropbox/Development/Sinatra/Testing/views/list.haml",
 		"/F/Dropbox/Development/Sinatra/Testing/views/single.haml",
 		"/F/Dropbox/Development/Sinatra/Testing/views/change_sim.haml",
 		"/F/Dropbox/Development/Sinatra/Testing/views/edit_form_sim.haml",
 		"/F/Dropbox/Development/Sinatra/Testing/views/chart.haml",
-		"/F/Dropbox/Development/Sinatra/Testing/views/layout.haml",
 		"/F/Dropbox/Development/Sinatra/Testing/views/change.haml",
-		"/F/Dropbox/Development/Sinatra/Testing/public/css/style.css",
 		"/F/Dropbox/Development/Sinatra/Testing/dev.sql",
 		"/F/Dropbox/Korialys Asia/ATS/20140828_export.csv",
 		"/F/Dropbox/Development/Sinatra/git/sinatra-recipes/models/data_mapper.md",
@@ -517,6 +548,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".btn",
+			"button",
 			"Unassigned",
 			"s",
 			"form-group",
@@ -683,7 +716,7 @@
 	},
 	"output.exec":
 	{
-		"height": 181.0
+		"height": 240.0
 	},
 	"output.git":
 	{
@@ -714,6 +747,6 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 157.0,
+	"side_bar_width": 176.0,
 	"status_bar_visible": true
 }

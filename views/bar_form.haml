@@ -1,0 +1,25 @@
+.container
+  .row
+    .col-md-10.col-md-offset-1
+      .scan-buttons
+        %span{id: "scanFields"}
+  .row
+    .col-lg-10
+      .scan-form
+        %form.device-form.form-horizontal{ :action => "/device/barnew", :method => "post", :enctype => "multipart/form-data" }
+
+          .form-group
+            %label.control-label Scanner Dump
+            %input.form-control{:onfocus => "this.value='';", :onchange => "scan(this);", :class => "scan", :type => "text", :id => "barcode", :autofocus => "autofocus"}
+
+          .form-group
+            %label.control-label
+            .btn-group
+              %input.btn.btn-large{ :type => "submit", :id => "submit"}
+              %input.btn.btn-large.btn-warning{type: "reset"}
+
+
+
+
+<script src="js/scan.js"></script>
+

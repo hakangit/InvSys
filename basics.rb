@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'bundler/setup'
+
+# normal stuff
 require 'dm-core'
 require 'dm-sqlite-adapter'
 require 'dm-migrations'
@@ -42,54 +46,12 @@ class Device
   property :iccid,            String
   property :serial,           String,  key: true
   property :modelid,          String
-  property :ats_id,           String
+  property :accessory1,       String,  default: 'Unassigned'
+  property :accessory2,       String,  default: 'Unassigned'
   property :location,         String,  default: 'Unassigned'
   property :status,           String,  default: 'Unassigned'
-  property :carrier_part,     String
-  property :carrier_part_2,   String
   property :created_at,       DateTime
-  has 1, :sim
 end
-
-class Sim
-  include DataMapper::Resource
-  property :id,               Serial
-  property :upca,             String,  default: 'None'
-  property :sku,              String,  default: 'None'
-  property :iccid,            String,  default: 'None'
-  property :ats_warehouse,    String,  default: 'Unassigned'
-  property :status,           String,  default: 'Unassigned'
-  property :created_at,       DateTime
-  has 1, :device
-
-end
-
-# class Shipment
-#   include DataMapper::Resource
-#   property :id,                   Serial
-#   property :courier,              String
-#   property :tracking_number,      String
-#   property :status,               String
-#   property :shipped,              Boolean
-#   property :created_at,           DateTime
-#   property :src_name,             String
-#   property :src_address_1,        String, default: ''
-#   property :src_address_2,        String, default: ''
-#   property :src_city,             String, default: ''
-#   property :src_region,           String, default: ''
-#   property :src_country,          String, default: ''
-#   property :src_postalcode,       String, default: ''
-#   property :dst_name,             String
-#   property :dst_address_1,        String, default: ''
-#   property :dst_address_2,        String, default: ''
-#   property :dst_city,             String, default: ''
-#   property :dst_region,           String, default: ''
-#   property :dst_country,          String, default: ''
-#   property :dst_postalcode,       String, default: ''
-#   has 0..n, :place
-#   has n, :device
-# end
-
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
@@ -101,18 +63,12 @@ def decode(input)
 
   @input.each do |x|
     case x
-      when /\A[\d]{7}\z/
-        @data["ats_id"] = x
       when /\A[\d]{12}\z/
         @data["upca"] = x
       when /\A[\d]{15}\z/
         @data["imei"] = x
-      when /\A[\d]{5}\z/
-        @data["carrier_part"] = x
       when /\A[\d]{20}\z/
         @data["iccid"] = x
-      when /\A1P\d.*/
-        @data["carrier_part_2"] = x
       when /\A1P\w{2}\d{3}\w{2}[\/\d]\w\z/
         @data["modelid"] = x[2..-1]
       when /\AS\w{12}\z/
@@ -141,7 +97,6 @@ get '/' do
 
  @title = 'Available Devices'
  @devices = Device.all
- @sims = Sim.all
  haml :list
 end
 
@@ -158,8 +113,6 @@ post '/device/barnew' do
   @post = decode(@pre.values)
   $stderr.puts "#{@post}"
   @temp = Device.new @post
-  @temp.sim = Sim.first_or_create({device_serial: @temp[:serial]})
-  @temp.attributes = ({sim_id: @temp.sim[:id]})
   @temp.save
   redirect to('/barnew')
 end
@@ -194,12 +147,6 @@ get '/device/csv' do
   content_type 'application/csv'
   attachment "devices.csv"
   json2csv(Device.all.to_json)
-end
-
-get '/sim/csv' do
-  content_type 'application/csv'
-  attachment "sims.csv"
-  json2csv(Sim.all.to_json)
 end
 
 get '/device/list/serial/:serial' do
@@ -249,27 +196,6 @@ get '/delete/confirmed/:serial' do
   @serial = params[:serial]
   @todelete = Device.last(serial: @serial)
   @todelete.destroy
-  redirect to('/')
-end
-
-get '/device/sim_id/:id' do
-  @title = 'Change View'
-  @title = 'Record Information'
-  @id = params[:id]
-  @devices = JSON.parse(Sim.last(id: @id).to_json)
-  haml :change_sim
-end
-
-get '/sim/:id/edit' do
-  @title = 'Edit View'
-  @id = params[:id]
-  @devices = Sim.last(id: @id)
-  haml :edit_form_sim
-end
-
-post '/sim/edit' do
-  @id = params[:id]
-  Sim.get(@id).update(params[:device])
   redirect to('/')
 end
 

@@ -3,65 +3,40 @@
 <script src="js/chartkick.js"></script>
 .container-fluid
   .row
-    .data-vis
-      .chart
-        %p
-          / =bar_chart({Unassigned: @devices.all(status: "Unassigned").count, Unknown: @devices.all(status: "").count,Received: @devices.all(status: "Received").count,StoragePrestage: @devices.all(status: "Storage-Prestage").count,WorkinProgrss: @devices.all(status: "Work in Progrss").count,QAPending: @devices.all(status: "QA Pending").count,ReadyForShipment: @devices.all(status: "Ready For Shipment").count,Shipped: @devices.all(status: "Shipped").count}, id: "front-chart")
-    .data-table
-      %table.table.table-striped
-        %thead.table-head
-          %tr
-            %td IMEI
-            %td Serial
-            / %td ICCI
-            %td Model
-            / %td Model
-            %td Location
-            %td Status
-        %tbody
-          - @devices.each do |dev|
+    .col-sm-12.col-md-12.col-lg-6
+      .data-vis
+        .chart
+          %p
+            / =bar_chart({Unassigned: @devices.all(status: "Unassigned").count, Unknown: @devices.all(status: "").count,Received: @devices.all(status: "Received").count,StoragePrestage: @devices.all(status: "Storage-Prestage").count,WorkinProgrss: @devices.all(status: "Work in Progrss").count,QAPending: @devices.all(status: "QA Pending").count,ReadyForShipment: @devices.all(status: "Ready For Shipment").count,Shipped: @devices.all(status: "Shipped").count}, id: "front-chart")
+      .data-table
+        %H3 Phones
+        %table.table.table-hover.table-condensed
+          %thead.table-head
             %tr
-              %td
-                %a{ href: "/device/list/imei/#{dev['imei']}"}=dev['imei']
-              / %td
-              %td
-                %a{ href: "/device/list/serial/#{dev['serial']}"}=dev['serial']
-              %td
-                =dev['modelid']
-              %td
-                %a{ href: "/device/list/location/#{dev['location']}" }=dev['location']
-              %td
-                %a{ href: "/device/list/status/#{dev['status']}" }=dev['status']
-              %td
-                %a.btn.btn-primary{ href: "/device/#{dev['serial']}" } Change
+              %td IMEI
+              %td Serial
+              / %td ICCI
+              %td Model
+              / %td Model
+              %td Location
+              %td Status
+          %tbody
+            - @devices.each do |dev|
+              %tr
+                %td
+                  %a{ href: "/device/list/imei/#{dev['imei']}"}=dev['imei']
+                / %td
+                %td
+                  %a{ href: "/device/list/serial/#{dev['serial']}"}=dev['serial']
+                %td
+                  =dev['modelid']
+                %td
+                  %a{ href: "/device/list/location/#{dev['location']}" }=dev['location']
+                %td
+                  %a{ href: "/device/list/status/#{dev['status']}" }=dev['status']
+                %td
+                  %a.btn.btn-primary{ href: "/device/#{dev['serial']}" } Change
 
-.container-fluid
-  .row
-    .data-table
-      %table.table.table-striped
-        %thead.table-head
-          %tr
-            %td ID
-            %td UPCA
-            %td SKU
-            %td ICCID
-            %td Location
-            %td Status
-        %tbody
-          - @devices.sims.each do |sim|
-            %tr
-              %td
-                %a{href: "/device/sim_id/#{sim['id']}"}=sim['id']
-              %td
-                =sim['upca']
-              %td
-                =sim['sku']
-              %td
-                =sim['iccid']
-              %td
-                =sim['status']
-              %td
-                %a.btn.btn-primary{ href: "/sim/#{sim['id']}/edit" } Change
 
 
 

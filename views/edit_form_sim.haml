@@ -1,0 +1,27 @@
+
+.container
+  .row
+    .col-sm-4
+      %h3.text-center SIM on #{@devices['device_serial']}
+      %form.device-form.form-horizontal{ :action => "/sim/edit", :method => "post", :enctype => "multipart/form-data" }
+        .form-group
+          / %label.control-label ID
+          %input.form-control{ :type => "hidden", :name => "id", value: @id  }
+        .form-group
+          %label.control-label UPC
+          %input.form-control{ :type => "text", :name => "device[upca]", value: @devices['upca'] }
+        .form-group
+          %label.control-label SKU
+          %input.form-control{ :type => "text", :name => "device[sku]", value: @devices['sku'] }
+        .form-group
+          %label.control-label ICCID
+          %input.form-control{ :type => "text", :name => "device[iccid]" ,value: @devices['iccid'] }
+        .form-group
+          %label.control-label Status
+          %select.form-control{ :name => "device[status]" }
+            %option{value: "Unassigned", selected: @devices['status'] == "Unassigned"}= "Unassigned"
+            %option{value: "Assigned", selected: @devices['status'] == "Assigned"}= "Assigned"
+        .form-group
+          %label.control-label
+          %input.btn.btn-primary{ :type => "submit" }
+          %input.btn.btn-warning{ :type => "reset" }
