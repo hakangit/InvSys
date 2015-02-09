@@ -43,9 +43,9 @@ class Device
   include DataMapper::Resource
   property :upca,             String
   property :imei,             String
-  property :iccid,            String
+  property :iccid,            String,  default: '000000000000000000000'
   property :serial,           String,  key: true
-  property :modelid,          String
+  property :modelid,          String,  default: 'Unknown'
   property :accessory1,       String,  default: 'Unassigned'
   property :accessory2,       String,  default: 'Unassigned'
   property :location,         String,  default: 'Unassigned'
@@ -112,9 +112,8 @@ post '/device/barnew' do
   @pre = params[:device]
   @post = decode(@pre.values)
   $stderr.puts "#{@post}"
-  @temp = Device.new @post
-  @temp.save
-  redirect to('/barnew')
+  Device.create @post
+  redirect to('/')
 end
 
 post '/device' do
