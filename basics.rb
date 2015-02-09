@@ -50,6 +50,8 @@ class Device
   property :accessory2,       String,  default: 'Unassigned'
   property :location,         String,  default: 'Unassigned'
   property :status,           String,  default: 'Unassigned'
+  property :firstname,        String,  default: 'Unassigned'
+  property :lastname,         String,  default: 'Unassigned'
   property :created_at,       DateTime
 end
 
@@ -110,6 +112,7 @@ end
 
 post '/device/barnew' do
   @pre = params[:device]
+  $stderr.puts "#{@pre}"
   @post = decode(@pre.values)
   $stderr.puts "#{@post}"
   Device.create @post

@@ -15,8 +15,8 @@
             %tr
               %td IMEI
               %td Serial
-              / %td ICCI
-              %td Model
+              %td ICCID
+              / %td Model
               / %td Model
               %td Location
               %td Status
@@ -29,7 +29,7 @@
                 %td
                   %a{ href: "/device/list/serial/#{dev['serial']}"}=dev['serial']
                 %td
-                  =dev['modelid']
+                  =dev['iccid']
                 %td
                   %a{ href: "/device/list/location/#{dev['location']}" }=dev['location']
                 %td

@@ -3,7 +3,7 @@ var scanFields = {
     imei: /^\d{15}$/,
     iccid: /^\d{20}$/,
     modelid: /^1P\w{2}\d{3}\w{2}\/\w$/,
-    serial: /^S\w{12}$/,
+    serial: /^S\w{12}$/
 };
 
 function toTitleCase(str)
